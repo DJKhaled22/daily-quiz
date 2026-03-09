@@ -32,8 +32,9 @@
       margin-bottom: 4px;
     }
     .header-date {
-      font-size: 0.85rem;
-      color: #bbbbbb;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #888888;
     }
     .progress-bar {
       height: 3px;
@@ -47,6 +48,17 @@
       background: #00c87a;
       border-radius: 999px;
       transition: width 0.4s ease;
+    }
+
+    /* ── Source attribution ── */
+    .source-tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      color: #999999;
+      margin-bottom: 14px;
+    }
+    .source-tag span {
+      font-style: italic;
     }
 
     /* ── Home screen ── */
@@ -275,9 +287,9 @@
 
   <!-- Home screen -->
   <div class="home-screen show" id="home-screen">
-    <div class="home-title">What are you in the mood for?</div>
+    <div class="home-title">Daily Insights from Hyder's Favourite Reads</div>
     <div class="home-subtitle">
-      Both paths are drawn from today's reading. Pick based on how much mental energy you have right now.
+      Every book I read, I take notes. This is where those notes come to life — a daily quiz or a fresh insight, refreshed every morning.
     </div>
     <div class="path-cards">
       <button class="path-card" onclick="startQuiz()">
@@ -295,6 +307,7 @@
 
   <!-- Quiz screen -->
   <div class="quiz-screen" id="quiz-screen">
+    <div class="source-tag" id="quiz-source"></div>
     <div class="question" id="question-text"></div>
     <div class="options" id="options-container"></div>
     <div class="explanation" id="explanation"></div>
@@ -319,6 +332,7 @@
     <div class="fact-number" id="fact-number"></div>
     <div class="fact-title" id="fact-title"></div>
     <div class="fact-body" id="fact-body"></div>
+    <div class="source-tag" id="fact-source"></div>
     <div class="btn-row">
       <button class="btn-primary" id="fact-next-btn">Next fact →</button>
     </div>
@@ -336,8 +350,8 @@
 </div>
 
 <script>
-const QUESTIONS = [{"question": "What was Apple's China sales volume in 2008 compared to 2012?", "options": ["Under $1 billion in 2008, growing to $20 billion by 2012", "Under $5 billion in 2008, growing to $15 billion by 2012", "$10 billion in 2008, growing to $50 billion by 2012", "$2 billion in 2008, growing to $25 billion by 2012"], "answer": 0, "explanation": "The notes clearly state that in 2008, Apple China sales volume was under one billion dollars, and by 2012 it had grown to $20 billion, reflecting Apple's rapid expansion in the Chinese market."}, {"question": "Why did the first two generations of the iPod struggle in the market?", "options": ["The design was considered unattractive by consumers", "High price and the requirement to have a Mac to use it", "Poor sound quality compared to competitors", "Apple had not yet partnered with Foxconn for manufacturing scale"], "answer": 1, "explanation": "According to the notes, the first two generations of the iPod were largely a dud due to their high price and the fact that they required a Mac to function. It was only after iTunes and iPod expanded to Windows that the third generation became a massive hit."}, {"question": "What strategic mistake did Steve Jobs make that allowed IBM and Microsoft to dominate the personal computer market?", "options": ["Jobs invested too heavily in the LaserWriter instead of core Mac products", "Jobs underestimated the value of an open ecosystem that enabled third-party competition", "Jobs refused to offshore manufacturing, making Apple products too expensive", "Jobs focused too much on design rather than software performance"], "answer": 1, "explanation": "The notes explain that Jobs miscalculated because IBM and Microsoft adopted a more open model that enabled competition and third-party development. In contrast, Jobs preferred a closed 'better experience' approach and disliked third parties, whereas Wozniak's openness was key to Apple II's earlier success."}, {"question": "What was the significance of China joining the World Trade Organization in 2001 for Apple's manufacturing strategy?", "options": ["It allowed Apple to open its own factories directly in China", "It removed quotas and tariffs, opening China to global trade and accelerating outsourcing", "It forced Apple to comply with Chinese labor regulations for the first time", "It gave Foxconn exclusive rights to manufacture Apple products"], "answer": 1, "explanation": "The notes state that China entered the World Trade Organization in 2001, which led to the removal of quotas and tariffs and opened the country to global trade. This accelerated international outsourcing as companies sought maximum scale and cost savings following the dotcom bubble."}, {"question": "How did Foxconn strategically win Apple's manufacturing business away from competitors like Inventec?", "options": ["Foxconn offered Apple exclusive use of patented assembly technology", "Foxconn built a replica of the iPod to prove it could handle high-quality production at scale, while Inventec struggled to keep pace", "Foxconn undercut Inventec's prices by 50% on all components", "Foxconn acquired Inventec and merged its operations into its own factories"], "answer": 1, "explanation": "According to the notes, Foxconn capitalized on Inventec's struggles by showing off a replica of the iPod to demonstrate it could handle high-quality production at scale. Meanwhile, Inventec was struggling to keep pace with Apple's demands, which opened the door for Foxconn to take over."}];
-const FACTS = [{"title": "Foxconn Outsizes Tech Giants", "fact": "Foxconn, the Taiwanese manufacturer best known for assembling iPhones, generates more revenue than Meta and Nvidia combined. Despite being invisible to consumers, it is one of the most economically significant companies on the planet."}, {"title": "China Learned From Apple's Visits", "fact": "Apple's outsourcing to China wasn't simple cheap labor arbitrage — Apple engineers regularly visited and transferred deep technical knowledge to suppliers like Foxconn, effectively building up China's advanced manufacturing competence. Apple even purchased custom equipment and barred suppliers from using it for rivals."}, {"title": "Plastic Came From Billiard Balls", "fact": "The invention of plastic injection moulding was triggered by a shortage of ivory caused by the surging popularity of billiards in the 1800s. A prize was offered to find an ivory substitute, leading to the development of early plastics around 1872."}, {"title": "Openness Beat 'Better Experience'", "fact": "Jobs believed a tightly controlled, superior experience would win the market, but he fundamentally miscalculated against IBM and Microsoft. Their more open, licensable approach enabled a flood of third-party competition that overwhelmed Apple's 'better product' strategy — a lesson Jobs had to learn the hard way."}, {"title": "A Failed Product Opened China", "fact": "The Newton, widely considered one of Apple's biggest flops, was paradoxically pivotal — it was the product that first pushed Apple into Taiwan for manufacturing and ultimately opened the path to mainland China. Failure, in this case, laid the groundwork for Apple's greatest supply chain advantage."}];
+const QUESTIONS = [{"question": "What was Apple's China sales volume in 2008, and how did it change by 2012?", "options": ["Under $500 million in 2008, growing to $10 billion by 2012", "Under $1 billion in 2008, growing to $20 billion by 2012", "Approximately $5 billion in 2008, growing to $25 billion by 2012", "Under $1 billion in 2008, growing to $15 billion by 2012"], "answer": 1, "explanation": "The notes state that Apple China sales volume was under one billion in 2008 and grew to 20 billion by 2012, reflecting massive expansion in the Chinese market.", "book": "Apple in China (part I)", "author": "Unknown"}, {"question": "Why did the third generation iPod become a major hit after earlier generations struggled?", "options": ["It was redesigned with a touch screen and became waterproof", "Its price was dramatically reduced and it added Bluetooth connectivity", "It expanded compatibility to Windows after Jobs gave up restricting it to Mac, leading to over 200% sales increase", "Apple launched an aggressive global marketing campaign targeting teenagers"], "answer": 2, "explanation": "The first two generations of iPod were largely duds due to high price and Mac-only compatibility. Once iTunes and iPod expanded to Windows, the third generation saw over 200% increase in sales.", "book": "Apple in China (part I)", "author": "Unknown"}, {"question": "What role did Foxconn play in winning Apple's manufacturing business away from Inventec?", "options": ["Foxconn offered lower labour costs by relocating to Southeast Asia", "Foxconn showed Apple a replica iPod to prove it could handle high-quality production at scale", "Foxconn acquired Inventec and inherited the Apple contract", "Foxconn was directly recommended by the Taiwanese government as a preferred supplier"], "answer": 1, "explanation": "Foxconn capitalized on Inventec's struggles to keep pace by showing off a replica of the iPod, demonstrating they could handle high-quality production at scale, which helped them win Apple's business.", "book": "Apple in China (part I)", "author": "Unknown"}, {"question": "What was a key strategic mistake Steve Jobs made that allowed IBM and Microsoft to dominate over Apple?", "options": ["Jobs invested too heavily in retail stores instead of software development", "Jobs miscalculated by favouring a closed ecosystem while IBM and Microsoft's more open approach enabled wider competition and third-party development", "Jobs refused to lower the price of the Mac to compete with cheaper PCs", "Jobs fired Wozniak, losing the engineering talent needed to compete with IBM"], "answer": 1, "explanation": "Jobs miscalculated because IBM and Microsoft's more open and compatible approach enabled competition and third-party developers, whereas Jobs preferred a controlled 'better experience' model. Wozniak's openness to third-party developers had actually been key to the Apple II's success.", "book": "Apple in China (part I)", "author": "Unknown"}, {"question": "What does the note about China and Apple's manufacturing relationship reveal beyond simple cost-cutting outsourcing?", "options": ["Apple used China purely for low-skill assembly work to keep costs minimal", "Apple maintained full in-house manufacturing in the US and only used China for overflow production", "Apple actively transferred knowledge, micromanaged suppliers, and built up China's tech competence, including involvement in making touch glass screens", "Apple outsourced to China reluctantly and always planned to return manufacturing to the United States"], "answer": 2, "explanation": "The notes explicitly challenge the misconception that China only did basic, low-value assembly. Apple micromanaged suppliers, transferred knowledge closely, purchased custom equipment barred from rivals, and China was involved in key processes like making touch glass screens — actively building up China's technological competence.", "book": "Apple in China (part I)", "author": "Unknown"}];
+const FACTS = [{"title": "Foxconn Outsizes Tech Giants", "fact": "Foxconn, the Taiwanese manufacturer best known for assembling iPhones, generates more revenue than Meta and Nvidia combined. Despite being invisible to consumers, it is one of the most economically significant companies on the planet.", "book": "Apple in China", "author": "Unknown"}, {"title": "China Built By Apple's Transfers", "fact": "Apple didn't just outsource to China — it actively built up China's tech manufacturing competence by micromanaging suppliers, transferring knowledge through executive visits, and even purchasing custom equipment barred from use by rivals. The common perception that China only did low-value assembly is false; China learned cutting-edge processes like making touch glass screens through Apple's involvement.", "book": "Apple in China", "author": "Unknown"}, {"title": "A Failed Product Changed Everything", "fact": "The Newton, Apple's notoriously failed PDA, was nonetheless pivotal in Apple's history — it opened Apple's manufacturing relationships in Taiwan and was instrumental in the hiring of Jony Ive. Sometimes a product's greatest legacy has nothing to do with the product itself.", "book": "Apple in China", "author": "Unknown"}, {"title": "Plastic Moulding Came From Billiards", "fact": "The invention of plastic injection moulding was triggered by a shortage of ivory caused by the rising popularity of billiards. A prize was offered in 1872 to create a synthetic alternative, inadvertently launching one of the most transformative manufacturing technologies in history.", "book": "Apple in China", "author": "Unknown"}, {"title": "iPod Revenue Eclipsed All Apple Products", "fact": "By the early 2000s, iPod revenue exceeded Apple's entire product line combined — yet Apple's leadership was already worried the iPod would be killed by smartphones. This fear of cannibalizing their own biggest success is what drove the creation of the iPhone.", "book": "Apple in China", "author": "Unknown"}];
 
 let current = 0;
 let score = 0;
@@ -369,6 +383,8 @@ function showQuestion() {
   const q = QUESTIONS[current];
   document.getElementById("progress-fill").style.width =
     `${((current + 1) / QUESTIONS.length) * 100}%`;
+  document.getElementById("quiz-source").innerHTML =
+    `<span>${q.book}</span> &mdash; ${q.author}`;
   document.getElementById("question-text").textContent = q.question;
   document.getElementById("explanation").textContent = "";
   document.getElementById("explanation").classList.remove("show");
@@ -442,6 +458,8 @@ function showFact() {
     `Fact ${current + 1} of ${FACTS.length}`;
   document.getElementById("fact-title").textContent = f.title;
   document.getElementById("fact-body").textContent = f.fact;
+  document.getElementById("fact-source").innerHTML =
+    `<span>${f.book}</span> &mdash; ${f.author}`;
   document.getElementById("fact-next-btn").textContent =
     current < FACTS.length - 1 ? "Next fact →" : "Finish";
 }
