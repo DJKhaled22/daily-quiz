@@ -48,6 +48,71 @@
       border-radius: 999px;
       transition: width 0.4s ease;
     }
+
+    /* ── Home screen ── */
+    .home-screen {
+      display: none;
+    }
+    .home-screen.show { display: block; }
+    .home-title {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    .home-subtitle {
+      font-size: 0.95rem;
+      color: #666666;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+    .path-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .path-card {
+      border: 1px solid #e8e8e8;
+      border-radius: 16px;
+      padding: 24px 28px;
+      cursor: pointer;
+      text-align: left;
+      background: #ffffff;
+      font-family: inherit;
+      transition: border-color 0.15s, background 0.15s;
+      width: 100%;
+    }
+    .path-card:hover {
+      border-color: #0a0a0a;
+      background: #fafafa;
+    }
+    .path-card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #0a0a0a;
+    }
+    .path-card-desc {
+      font-size: 0.875rem;
+      color: #666666;
+      line-height: 1.55;
+    }
+    .path-card-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 3px 10px;
+      margin-bottom: 10px;
+    }
+    .tag-quiz { background: #e6fff4; color: #007a4a; }
+    .tag-facts { background: #f0f0ff; color: #4040cc; }
+
+    /* ── Quiz ── */
+    .quiz-screen { display: none; }
+    .quiz-screen.show { display: block; }
     .question {
       font-size: 1.5rem;
       font-weight: 700;
@@ -74,9 +139,7 @@
       transition: background 0.15s, border-color 0.15s, color 0.15s;
       line-height: 1.45;
     }
-    .option-btn:hover:not(:disabled) {
-      background: #f5f5f5;
-    }
+    .option-btn:hover:not(:disabled) { background: #f5f5f5; }
     .option-btn.correct {
       border-color: #00c87a;
       background: #e6fff4;
@@ -98,21 +161,8 @@
       line-height: 1.6;
     }
     .explanation.show { display: block; }
-    .next-btn {
-      display: none;
-      padding: 14px 32px;
-      background: #0a0a0a;
-      color: #ffffff;
-      border: none;
-      border-radius: 999px;
-      font-size: 0.95rem;
-      font-family: inherit;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.15s;
-    }
-    .next-btn:hover { opacity: 0.82; }
-    .next-btn.show { display: inline-block; }
+
+    /* ── Score screen ── */
     .score-screen {
       display: none;
       text-align: center;
@@ -137,7 +187,68 @@
       color: #0a0a0a;
       margin-bottom: 40px;
     }
-    .restart-btn {
+
+    /* ── Facts screen ── */
+    .facts-screen { display: none; }
+    .facts-screen.show { display: block; }
+    .fact-number {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #999999;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .fact-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 16px;
+      color: #0a0a0a;
+    }
+    .fact-body {
+      font-size: 1rem;
+      color: #444444;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    /* ── Facts done screen ── */
+    .facts-done-screen {
+      display: none;
+      text-align: center;
+      padding-top: 24px;
+    }
+    .facts-done-screen.show { display: block; }
+    .facts-done-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .facts-done-msg {
+      font-size: 1rem;
+      color: #666666;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    /* ── Shared buttons ── */
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 32px;
+      background: #0a0a0a;
+      color: #ffffff;
+      border: none;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.82; }
+    .btn-outline {
+      display: inline-block;
       padding: 14px 32px;
       background: #ffffff;
       color: #0a0a0a;
@@ -149,47 +260,108 @@
       cursor: pointer;
       transition: background 0.15s, color 0.15s;
     }
-    .restart-btn:hover {
-      background: #0a0a0a;
-      color: #ffffff;
-    }
-    .quiz-body { display: block; }
+    .btn-outline:hover { background: #0a0a0a; color: #ffffff; }
+    .btn-hidden { display: none; }
+    .btn-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
   </style>
 </head>
 <body>
 <div class="card">
   <div class="header">
-    <div class="header-label">Daily Quiz</div>
+    <div class="header-label">Daily Learning</div>
     <div class="header-date">March 09, 2026</div>
   </div>
-  <div class="progress-bar"><div class="progress-bar-fill" id="progress-fill" style="width:20%"></div></div>
+  <div class="progress-bar"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
 
-  <div class="quiz-body" id="quiz-body">
+  <!-- Home screen -->
+  <div class="home-screen show" id="home-screen">
+    <div class="home-title">What are you in the mood for?</div>
+    <div class="home-subtitle">
+      Both paths are drawn from today's reading. Pick based on how much mental energy you have right now.
+    </div>
+    <div class="path-cards">
+      <button class="path-card" onclick="startQuiz()">
+        <div class="path-card-tag tag-quiz">Quiz</div>
+        <div class="path-card-title">Test your knowledge</div>
+        <div class="path-card-desc">5 multiple-choice questions on ideas from your books. See how much stuck — answers and explanations included.</div>
+      </button>
+      <button class="path-card" onclick="startFacts()">
+        <div class="path-card-tag tag-facts">Interesting Facts</div>
+        <div class="path-card-title">Just learn something new</div>
+        <div class="path-card-desc">5 surprising or thought-provoking ideas pulled from today's reading. No right or wrong — just things worth knowing.</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Quiz screen -->
+  <div class="quiz-screen" id="quiz-screen">
     <div class="question" id="question-text"></div>
     <div class="options" id="options-container"></div>
     <div class="explanation" id="explanation"></div>
-    <button class="next-btn" id="next-btn">Next question →</button>
+    <div class="btn-row">
+      <button class="btn-primary btn-hidden" id="next-btn">Next question →</button>
+    </div>
   </div>
 
+  <!-- Score screen -->
   <div class="score-screen" id="score-screen">
     <div class="score-big" id="score-value"></div>
     <div class="score-label">out of 5</div>
     <div class="score-msg" id="score-msg"></div>
-    <button class="restart-btn" onclick="startQuiz()">Try again</button>
+    <div class="btn-row" style="justify-content:center; gap:12px;">
+      <button class="btn-outline" onclick="showHome()">Back to home</button>
+      <button class="btn-outline" onclick="startQuiz()">Try again</button>
+    </div>
+  </div>
+
+  <!-- Facts screen -->
+  <div class="facts-screen" id="facts-screen">
+    <div class="fact-number" id="fact-number"></div>
+    <div class="fact-title" id="fact-title"></div>
+    <div class="fact-body" id="fact-body"></div>
+    <div class="btn-row">
+      <button class="btn-primary" id="fact-next-btn">Next fact →</button>
+    </div>
+  </div>
+
+  <!-- Facts done screen -->
+  <div class="facts-done-screen" id="facts-done-screen">
+    <div class="facts-done-title">That's a wrap.</div>
+    <div class="facts-done-msg">5 ideas from today's reading. Come back tomorrow for more.</div>
+    <div class="btn-row" style="justify-content:center; gap:12px;">
+      <button class="btn-outline" onclick="showHome()">Back to home</button>
+      <button class="btn-outline" onclick="startFacts()">Read again</button>
+    </div>
   </div>
 </div>
 
 <script>
-const QUESTIONS = [{"question": "What keyboard shortcut is used to switch between modes (such as plan mode) in Claude Code?", "options": ["Cmd+B", "Up Arrow", "Shift+Tab", "Esc pressed twice"], "answer": 2, "explanation": "Shift+Tab is used to switch between modes in Claude Code, including toggling plan mode."}, {"question": "According to the notes on AI Product Management, what should a PM do when Marketing or Sales comes to them with a solution?", "options": ["Immediately add it to the product roadmap", "Reverse engineer the suggested solution back to the underlying problem by asking why it would be helpful", "Evaluate whether it is technically feasible before anything else", "Outsource the thinking to an AI tool to generate a PRD"], "answer": 1, "explanation": "The notes emphasize asking 'why do you think that's helpful / what problem will it solve' to reverse engineer solutions back to real problems, which is what gets added to the opportunity tree."}, {"question": "In Python (as covered in the notes), what does the type() function do?", "options": ["Deletes a cell in Jupyter Lab", "Runs a command in the terminal", "Returns the data type of a variable, such as string, integer, or float", "Creates a new variable in memory"], "answer": 2, "explanation": "The type() function returns the type of a variable — for example, whether it is a string, integer, or float (decimal)."}, {"question": "According to the Continuous Discovery notes, what is the core distinction between 'discovery' and 'delivery'?", "options": ["Discovery is done by engineers; delivery is done by designers", "Discovery is the work you do to decide what to build; delivery is the work you do to build and ship products", "Discovery focuses on business outcomes; delivery focuses on customer outcomes", "Discovery happens after launch; delivery happens before launch"], "answer": 1, "explanation": "The notes clearly define discovery as the work done to decide what to build, and delivery as the work done to actually build and ship those products. Most companies underinvest in discovery."}, {"question": "When evaluating solutions in the execution/solution space, what should a PM — especially early on — primarily focus on?", "options": ["Feasibility and usability", "Usability and feasibility", "Valuable and viable", "Feasible and usable"], "answer": 2, "explanation": "The notes explicitly state that as a PM, especially early on, you should focus on whether a solution is valuable and viable, and not get distracted by whether it is technically feasible."}];
+const QUESTIONS = [{"question": "What was Apple's China sales volume in 2008 compared to 2012?", "options": ["Under $1 billion in 2008, rising to $20 billion by 2012", "Under $5 billion in 2008, rising to $15 billion by 2012", "About $10 billion in 2008, doubling to $20 billion by 2012", "Under $1 billion in 2008, rising to $10 billion by 2012"], "answer": 0, "explanation": "The notes explicitly state that Apple China sales volume was under one billion in 2008 and had grown to 20 billion by 2012, reflecting the massive expansion of Apple's presence in China."}, {"question": "Why did the third generation iPod become a massive hit compared to the first two generations?", "options": ["It was the first iPod with color display and camera", "It was cheaper and had longer battery life", "iTunes and iPod compatibility was expanded to Windows users, not just Mac users", "It was manufactured by Foxconn, reducing costs significantly"], "answer": 2, "explanation": "The first two generations of iPod were largely a dud due to high price and requirement for a Mac. Once Jobs gave up his resistance and allowed iTunes/iPod to expand to Windows, the third generation saw over 200% increase in sales."}, {"question": "What was the key strategic miscalculation Steve Jobs made when competing against IBM and Microsoft?", "options": ["He invested too heavily in the LaserWriter instead of personal computers", "He underestimated how IBM's open, licensable model would enable greater competition and adoption than Apple's closed 'better experience' approach", "He relied too much on Japanese manufacturing partners like Canon and Sony", "He cut too many products when he returned to Apple in the late 1990s"], "answer": 1, "explanation": "Jobs miscalculated because IBM and Microsoft's more open model allowed Microsoft to license its OS to others, enabling widespread competition and adoption. Apple's focus on a controlled 'better experience' could not match the ecosystem that openness created."}, {"question": "How did Foxconn strategically win Apple's manufacturing business away from competitors like Inventec?", "options": ["Foxconn offered Apple an exclusive long-term contract at the lowest possible price", "Foxconn built a replica iPod to prove it could handle high-quality production at scale, while Inventec struggled to keep pace", "Foxconn acquired Inventec's factories and transferred production directly", "Terry Gou personally guaranteed quality by stationing Foxconn engineers at Apple headquarters"], "answer": 1, "explanation": "When Inventec struggled to scale production, Foxconn capitalized by showing off a replica iPod to prove their high-quality production capabilities at scale, which convinced Apple to shift its manufacturing relationship to Foxconn."}, {"question": "Which of the following best describes Apple's approach to manufacturing in China, challenging the common misconception about outsourcing?", "options": ["Apple outsourced all design and manufacturing decisions entirely to Chinese suppliers to reduce costs", "Apple only used China for basic, low-value assembly tasks while keeping all complex work in the US", "Apple closely micromanaged suppliers, transferred knowledge, and even purchased custom equipment barred from use by rivals, actively building China's tech competence", "Apple treated Chinese manufacturing the same as its previous partnerships in Japan and Taiwan, with minimal involvement"], "answer": 2, "explanation": "The notes emphasize that Apple's relationship with Chinese manufacturing was not simple outsourcing. Apple micromanaged suppliers, transferred knowledge closely, purchased custom equipment that rivals were barred from using, and in doing so actively built up China's technological competence — including involvement in complex processes like making touch glass screens."}];
+const FACTS = [{"title": "Foxconn Bigger Than Meta and Nvidia", "fact": "Foxconn, the Taiwanese manufacturer best known for assembling iPhones, generates more revenue than Meta and Nvidia combined. Yet most people have never heard of it, making it one of the most influential invisible companies in the world."}, {"title": "China's Manufacturing Was Never 'Basic'", "fact": "A common misconception is that China only handled low-skill, cheap assembly work. In reality, Apple transferred significant technical knowledge to Chinese manufacturers, including complex processes like making touch glass screens — actively building China's high-tech competence in the process."}, {"title": "Apple's Failed Products Built Its Future", "fact": "The Newton, Apple's famously flawed early PDA, was a commercial failure — but it was pivotal in opening Apple's manufacturing relationships in Taiwan and led to hiring designer Jony Ive. Sometimes a product's greatest legacy is what it enables, not what it sells."}, {"title": "Plastic Was Invented to Save Elephants", "fact": "The patent for plastic injection moulding traces back to an ivory shortage caused by the surging popularity of billiards in the 1800s. A prize was offered to create an ivory substitute, and the solution born from that challenge eventually transformed modern manufacturing."}, {"title": "Openness Beat 'Better' Every Time", "fact": "Steve Jobs lost the PC wars to IBM and Microsoft not because Apple's products were worse, but because the open, third-party-friendly ecosystem enabled far more competition and innovation. Jobs's instinct to control everything was actually a strategic liability — a lesson he had to relearn multiple times."}];
 
 let current = 0;
 let score = 0;
 
+function hide(id) { document.getElementById(id).classList.remove("show"); }
+function show(id) { document.getElementById(id).classList.add("show"); }
+
+function showHome() {
+  hide("quiz-screen");
+  hide("score-screen");
+  hide("facts-screen");
+  hide("facts-done-screen");
+  document.getElementById("progress-fill").style.width = "0%";
+  show("home-screen");
+}
+
+// ── Quiz ──
+
 function startQuiz() {
   current = 0;
   score = 0;
-  document.getElementById("score-screen").classList.remove("show");
-  document.getElementById("quiz-body").style.display = "block";
+  hide("home-screen");
+  hide("score-screen");
+  show("quiz-screen");
   showQuestion();
 }
 
@@ -200,7 +372,8 @@ function showQuestion() {
   document.getElementById("question-text").textContent = q.question;
   document.getElementById("explanation").textContent = "";
   document.getElementById("explanation").classList.remove("show");
-  document.getElementById("next-btn").classList.remove("show");
+  const nextBtn = document.getElementById("next-btn");
+  nextBtn.classList.add("btn-hidden");
 
   const container = document.getElementById("options-container");
   container.innerHTML = "";
@@ -218,7 +391,6 @@ function selectAnswer(chosen) {
   const q = QUESTIONS[current];
   const buttons = document.querySelectorAll(".option-btn");
   buttons.forEach(b => b.disabled = true);
-
   if (chosen === q.answer) {
     buttons[chosen].classList.add("correct");
     score++;
@@ -226,11 +398,10 @@ function selectAnswer(chosen) {
     buttons[chosen].classList.add("wrong");
     buttons[q.answer].classList.add("correct");
   }
-
   const expEl = document.getElementById("explanation");
   expEl.textContent = q.explanation;
   expEl.classList.add("show");
-  document.getElementById("next-btn").classList.add("show");
+  document.getElementById("next-btn").classList.remove("btn-hidden");
 }
 
 document.getElementById("next-btn").addEventListener("click", () => {
@@ -238,27 +409,53 @@ document.getElementById("next-btn").addEventListener("click", () => {
   if (current < QUESTIONS.length) {
     showQuestion();
   } else {
-    showScore();
+    hide("quiz-screen");
+    show("score-screen");
+    document.getElementById("score-value").textContent = score;
+    const msgs = [
+      "Keep reading — you'll get there!",
+      "Not bad, keep going!",
+      "Good effort!",
+      "Well done!",
+      "Almost perfect!",
+      "Perfect score! Outstanding!"
+    ];
+    document.getElementById("score-msg").textContent = msgs[score];
   }
 });
 
-function showScore() {
-  document.getElementById("quiz-body").style.display = "none";
-  const ss = document.getElementById("score-screen");
-  ss.classList.add("show");
-  document.getElementById("score-value").textContent = score;
-  const msgs = [
-    "Keep reading — you'll get there!",
-    "Not bad, keep going!",
-    "Good effort!",
-    "Well done!",
-    "Almost perfect!",
-    "Perfect score! Outstanding!"
-  ];
-  document.getElementById("score-msg").textContent = msgs[score];
+// ── Facts ──
+
+function startFacts() {
+  current = 0;
+  hide("home-screen");
+  hide("facts-done-screen");
+  show("facts-screen");
+  showFact();
 }
 
-startQuiz();
+function showFact() {
+  const f = FACTS[current];
+  document.getElementById("progress-fill").style.width =
+    `${((current + 1) / FACTS.length) * 100}%`;
+  document.getElementById("fact-number").textContent =
+    `Fact ${current + 1} of ${FACTS.length}`;
+  document.getElementById("fact-title").textContent = f.title;
+  document.getElementById("fact-body").textContent = f.fact;
+  document.getElementById("fact-next-btn").textContent =
+    current < FACTS.length - 1 ? "Next fact →" : "Finish";
+}
+
+document.getElementById("fact-next-btn").addEventListener("click", () => {
+  current++;
+  if (current < FACTS.length) {
+    showFact();
+  } else {
+    hide("facts-screen");
+    document.getElementById("progress-fill").style.width = "100%";
+    show("facts-done-screen");
+  }
+});
 </script>
 </body>
 </html>
