@@ -21,8 +21,12 @@
       width: 100%;
     }
     .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       margin-bottom: 32px;
     }
+    .header-left {}
     .header-label {
       font-size: 0.78rem;
       font-weight: 600;
@@ -36,6 +40,21 @@
       font-weight: 600;
       color: #888888;
     }
+    .home-btn {
+      display: none;
+      padding: 8px 18px;
+      background: #ffffff;
+      color: #0a0a0a;
+      border: 1px solid #e8e8e8;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .home-btn:hover { border-color: #0a0a0a; background: #f5f5f5; }
+    .home-btn.visible { display: inline-block; }
     .progress-bar {
       height: 3px;
       background: #e8e8e8;
@@ -280,8 +299,11 @@
 <body>
 <div class="card">
   <div class="header">
-    <div class="header-label">Daily Learning</div>
-    <div class="header-date">March 09, 2026</div>
+    <div class="header-left">
+      <div class="header-label">Daily Learning</div>
+      <div class="header-date">March 09, 2026</div>
+    </div>
+    <button class="home-btn" id="home-btn" onclick="showHome()">← Home</button>
   </div>
   <div class="progress-bar"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
 
@@ -350,8 +372,8 @@
 </div>
 
 <script>
-const QUESTIONS = [{"question": "According to the notes on 'Destiny Disrupted,' what was the core belief of Abdul Wahab that led to the founding of Wahhabism?", "options": ["Muslims needed to adopt Western scientific methods to strengthen Islam", "Muslims had been corrupted and needed to return to Islam's core roots", "The Ottoman Empire was the rightful leader of all Muslim lands", "Islamic law needed to be reformed through a Protestant-like movement"], "answer": 1, "explanation": "The notes state that Abdul Wahab believed Muslims had been corrupted and needed to go back to Islam's core meaning and roots, which was the foundational belief driving Wahhabism.", "book": "Destiny Disrupted", "author": "Tamim Ansary"}, {"question": "According to 'The Power of Habit,' what is the correct order of the habit loop?", "options": ["Routine, Cue, Reward", "Reward, Routine, Cue", "Cue, Routine, Reward", "Cue, Reward, Routine"], "answer": 2, "explanation": "The notes explicitly describe the habit loop as: 1. 'Cue' — a trigger for the brain to start automatic mode, 2. 'Routine' — the automatic action, and 3. 'Reward' — which helps the brain determine if the habit is worth keeping.", "book": "The Power of Habit", "author": "Charles Duhigg"}, {"question": "Based on the notes from 'Arabs,' what does the Arabic word for politics, 'Siyasah,' trace its origins to?", "options": ["The governance of ancient desert tribes", "The herding of horses and camels", "The administration of trade caravans", "The ruling of city-states in the Fertile Crescent"], "answer": 1, "explanation": "The notes specifically highlight that while the English word 'politics' stems from 'polis' meaning city, the Arabic word 'Siyasah' traces its origins to words relating to the herding of horses and camels.", "book": "Arabs", "author": "Tim Mackintosh-Smith"}, {"question": "According to the notes on 'Apple in China,' what strategic mistake did Steve Jobs make that allowed IBM and Microsoft to dominate the personal computing market?", "options": ["He invested too heavily in outsourcing manufacturing to Taiwan and Japan", "He failed to develop a competitive operating system to rival Windows", "He did not embrace the more open model that enabled third-party competition", "He focused too much on the consumer market instead of enterprise clients"], "answer": 2, "explanation": "The notes state that Jobs miscalculated because IBM/Microsoft's more open-source model enabled greater competition and third-party development, whereas Jobs prioritized a closed 'better experience' approach and disliked third parties.", "book": "Apple in China", "author": "Patrick McGee"}, {"question": "According to the notes from 'User Story Mapping,' what is the key problem with relying solely on shared documents for communication?", "options": ["Documents are too time-consuming to produce and maintain", "Shared documents do not equal shared understanding and can lead to broken telephone", "Documents focus too much on visuals rather than written requirements", "Shared documents make it difficult to track who is responsible for each requirement"], "answer": 1, "explanation": "The notes directly quote: 'Shared documents don't equal shared understanding,' noting there can be a 'broken telephone' effect, meaning people may interpret documents differently from what was intended.", "book": "User Story Mapping", "author": "Jeff Patton"}];
-const FACTS = [{"title": "Cod Fish Built British Empire", "fact": "The British Empire's global expansion was partly financed by salted cod. Southern European demand for English cod injected cash into the British economy, which was then reinvested into funding further exploration — meaning a humble fish effectively bankrolled imperial ambition. Bristol's role as a cod-trading hub also gave English sailors the navigational knowledge of Atlantic currents needed to reach the New World.", "book": "The Taste of Empire", "author": "Unknown"}, {"title": "iPhone's Lopsided Profit Dominance", "fact": "Despite holding under 20% market share in smartphones, the iPhone accounts for roughly 80% of the entire industry's profits. This stark gap reveals how Apple's premium pricing and ecosystem lock-in allow it to extract the vast majority of value from a market it does not numerically dominate.", "book": "Apple in China", "author": "Unknown"}, {"title": "Panic Is Easier Than Thinking", "fact": "Some people actually prefer to panic during a crisis because reacting on survival instinct is easier than consciously confronting reality. The Greeks had a term for the antidote — 'apatheia' — meaning calmness free from harmful emotion, not the absence of feeling but the deliberate refusal to let destructive reactions take over.", "book": "The Obstacle Is the Way", "author": "Ryan Holiday"}, {"title": "Defeating Carthage Destroyed Rome", "fact": "Rome's final victory over Carthage in 146 BC, rather than strengthening the republic, paradoxically triggered its slow collapse. With no external threat to unify them, Roman society fractured into rising economic inequality, political polarization, and rampant corruption — the very conditions that would eventually end the republic.", "book": "The Storm Before the Storm", "author": "Mike Duncan"}, {"title": "Kandahar's Name Honors Alexander", "fact": "The city of Kandahar in modern Afghanistan derives its name from 'Iskandar,' the Persian and Arabic rendering of Alexander the Great's name — a linguistic fossil preserving the memory of his conquests over two thousand years later. It is a reminder that place names can carry the echoes of ancient empires long after those empires have vanished.", "book": "Destiny Disrupted", "author": "Tamim Ansary"}];
+const QUESTIONS = [{"question": "What was the core strategic logic behind the Schlieffen Plan regarding a two-front war?", "options": ["Attack Russia first while France remained neutral, then pivot west", "Defend German borders and wait for France and Russia to overextend", "Aggressively defeat France first through Belgium, then turn east against the slower-mobilizing Russia", "Split German forces equally between France and Russia from the outset"], "answer": 2, "explanation": "The Schlieffen Plan called for a rapid defeat of France by flanking through Belgium, banking on Russia's slow mobilization due to its vast land mass and weak infrastructure, allowing Germany to then redirect forces eastward.", "book": "The Guns of August", "author": "Barbara Tuchman"}, {"question": "According to the notes on 'Destiny Disrupted,' why did the French invest heavily in Russia prior to World War One?", "options": ["France wanted to expand trade routes through Central Asia", "France sought to modernize Russia's military technology", "France wanted to create a two-front war scenario against Germany", "France hoped Russia would help suppress Ottoman expansion"], "answer": 2, "explanation": "The notes state that France invested in Russia because it wanted a two-front war, forcing Germany to split its military focus between east and west.", "book": "Destiny Disrupted", "author": "Tamim Ansary"}, {"question": "What unusual logistical decision did Genghis Khan make when crossing deserts during his campaigns?", "options": ["He traveled only at night to avoid the heat and enemy detection", "He waited for the coldest months so his army could travel light and use frozen ground", "He built elaborate supply chains with camel caravans carrying water and food", "He avoided deserts entirely and used river routes for all major movements"], "answer": 1, "explanation": "According to the notes, Khan deliberately chose the coldest months for desert crossings so his army could carry less water, travel light, and take advantage of grass growth for grazing animals.", "book": "Genghis Khan and the Making of the Modern World", "author": "Jack Weatherford"}, {"question": "What distinguished Cleopatra from most other Ptolemaic rulers in terms of language?", "options": ["She was the only Ptolemy to read and write hieroglyphics fluently", "She rejected Greek entirely and communicated exclusively in Latin with Roman leaders", "She was among the few Ptolemies to speak Egyptian and could speak up to nine languages without interpreters", "She invented a new diplomatic language combining Greek and Egyptian"], "answer": 2, "explanation": "The notes highlight that most Ptolemies spoke primarily Greek, but Cleopatra was notable for speaking Egyptian as well as up to nine languages, allowing her to communicate without interpreters.", "book": "Cleopatra: A Life", "author": "Stacy Schiff"}, {"question": "According to the notes on 'Arabs,' what is the linguistic origin of the Arabic word for politics, 'Siyasah'?", "options": ["It derives from the Arabic root word for governance and law", "It stems from an ancient term meaning the writing of contracts", "Its origins are tied to the herding of horses and camels", "It comes from the Greek word 'polis,' meaning city"], "answer": 2, "explanation": "The notes explicitly contrast the English word 'politics,' which comes from 'polis' meaning city, with the Arabic 'Siyasah,' whose origins trace back to words related to the herding of horses and camels.", "book": "Arabs: A 3,000-Year History of Peoples, Tribes and Empires", "author": "Tim Mackintosh-Smith"}];
+const FACTS = [{"title": "Obstacles as Engineered Opportunities", "fact": "The Stoic philosophy underlying Marcus Aurelius's thinking holds that obstacles are not just things to endure but can literally become the path forward — the resistance itself shapes you. 'Hurricane' Carter, falsely imprisoned, refused to see himself as a prisoner and left jail stronger and more learned than when he entered, demonstrating that the story we tell ourselves about adversity may matter more than the adversity itself.", "book": "The Obstacle Is the Way", "author": "Ryan Holiday"}, {"title": "Carthage's Fall Broke Rome", "fact": "Defeating Carthage in 146 BC — Rome's greatest external threat — paradoxically triggered Rome's internal collapse. With no powerful foreign enemy to unite against, the Roman Republic descended into economic inequality, political polarization, and corruption, suggesting that existential threats can be a hidden source of social cohesion.", "book": "The Storm Before the Storm", "author": "Mike Duncan"}, {"title": "Thor Was Actually a Redhead", "fact": "Contrary to popular modern depictions, the Norse mythological Thor was described as a redhead, not blonde. He also required an enchanted belt and iron gloves just to wield his own hammer Mjolnir — meaning even the god of thunder needed equipment augmentations to handle his signature weapon.", "book": "Norse Mythology", "author": "Neil Gaiman"}, {"title": "Balfour Never Mentioned Palestinians", "fact": "The 1917 Balfour Declaration, the foundational British document supporting a Jewish homeland in Palestine, never once mentioned the Arab Palestinian population that already lived there — a deliberate omission that shaped the legal and political erasure of Palestinian identity for decades to come.", "book": "The Hundred Years' War on Palestine", "author": "Rashid Khalidi"}, {"title": "Robots Faced Human Union Protests", "fact": "In Asimov's fictional world of iRobot, the introduction of robots into society was met with public protests and union opposition — a remarkably prescient detail written decades before automation anxiety became a defining feature of real economic and labor debates.", "book": "I, Robot", "author": "Isaac Asimov"}];
 
 let current = 0;
 let score = 0;
@@ -365,6 +387,7 @@ function showHome() {
   hide("facts-screen");
   hide("facts-done-screen");
   document.getElementById("progress-fill").style.width = "0%";
+  document.getElementById("home-btn").classList.remove("visible");
   show("home-screen");
 }
 
@@ -375,6 +398,7 @@ function startQuiz() {
   score = 0;
   hide("home-screen");
   hide("score-screen");
+  document.getElementById("home-btn").classList.add("visible");
   show("quiz-screen");
   showQuestion();
 }
@@ -446,6 +470,7 @@ function startFacts() {
   current = 0;
   hide("home-screen");
   hide("facts-done-screen");
+  document.getElementById("home-btn").classList.add("visible");
   show("facts-screen");
   showFact();
 }
