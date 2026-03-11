@@ -384,6 +384,7 @@
     <div class="options" id="options-container"></div>
     <div class="explanation" id="explanation"></div>
     <div class="btn-row">
+      <button class="btn-outline btn-hidden" id="back-btn">← Back</button>
       <button class="btn-primary btn-hidden" id="next-btn">Next question →</button>
     </div>
   </div>
@@ -406,6 +407,7 @@
     <div class="fact-body" id="fact-body"></div>
     <div class="source-tag" id="fact-source"></div>
     <div class="btn-row">
+      <button class="btn-outline btn-hidden" id="fact-back-btn">← Back</button>
       <button class="btn-primary" id="fact-next-btn">Next fact →</button>
     </div>
   </div>
@@ -415,6 +417,7 @@
     <div class="facts-done-title">That's a wrap.</div>
     <div class="facts-done-msg">5 ideas from today's reading. Come back tomorrow for more.</div>
     <div class="btn-row" style="justify-content:center; gap:12px;">
+      <button class="btn-outline" onclick="goBackFromFactsDone()">← Back</button>
       <button class="btn-outline" onclick="showHome()">Back to home</button>
       <button class="btn-outline" onclick="startFacts()">Read again</button>
     </div>
@@ -422,11 +425,12 @@
 </div>
 
 <script>
-const QUESTIONS = [{"question": "According to the note, why did the early universe remain opaque for a period after the Big Bang?", "options": ["Gravity was too strong for light to escape dense star clusters", "Photons of light were bouncing off free electrons, preventing light from passing through", "The universe had not yet cooled enough to form any matter at all", "Hydrogen clouds absorbed all light before it could travel freely"], "answer": 1, "explanation": "The note states it took almost 200,000 years for the universe to become transparent (invisible), because before that it was opaque as photons of light were bouncing off free electrons.", "book": "An Autobiography of the Milky Way", "author": "Unknown", "topic": "Cosmology & Astrophysics"}, {"question": "What was the core belief of Abdul Wahab that drove the founding of Wahhabism?", "options": ["Muslims should embrace Western social values to modernize Islam", "Islam needed a Protestant-style reformation led by the ulama", "Muslims had been corrupted and needed to return to the core roots of Islam", "The Ottoman Empire should adopt democratic principles from Europe"], "answer": 2, "explanation": "The note explains that Abdul Wahab believed Muslims had been corrupted and needed to go back to Islam's core meaning and roots, which was the foundational principle behind Wahhabism.", "book": "Destiny Disrupted", "author": "Tamim Ansary", "topic": "Islamic History"}, {"question": "What was the pivotal role of Apple's Newton product, despite being considered a failure?", "options": ["It introduced the concept of touchscreen technology that later powered the iPhone", "It was the first Apple product to be manufactured entirely in China", "It was instrumental in Apple opening up relationships in Taiwan and led to hiring Jony Ive", "It demonstrated that consumer electronics could be successfully outsourced to Japan"], "answer": 2, "explanation": "The note states that the Newton, despite being a failure, was pivotal for Apple in opening up Taiwan as a manufacturing partner and was connected to the hiring of Jony Ive.", "book": "Apple in China", "author": "Unknown", "topic": "Tech Industry History"}, {"question": "According to the note on 'Same as Ever', what does Jeff Bezos identify as something that will never change for Amazon's customers?", "options": ["The desire for personalised product recommendations and loyalty rewards", "The preference for premium quality products over affordable alternatives", "The expectation that prices will always be lower than competitors", "The desire for low prices and fast delivery"], "answer": 3, "explanation": "The note directly quotes Bezos as saying what will never change is that customers always want low prices and fast delivery, used as an example of identifying timeless constants in a changing world.", "book": "Same as Ever", "author": "Morgan Housel", "topic": "Behavioural Economics"}, {"question": "According to the note on Istanbul, until what year did Abdulhamit the 2nd rule the Ottoman Empire?", "options": ["1899", "1918", "1909", "1923"], "answer": 2, "explanation": "The note explicitly states that Abdulhamit the 2nd ruled the Ottomans from 1876 to 1909.", "book": "Istanbul: Memories and the City", "author": "Orhan Pamuk", "topic": "Ottoman Cultural History"}];
-const FACTS = [{"title": "Genghis Conquered Rome's Pace", "fact": "Genghis Khan seized more territory than the entire Roman Empire in just 25 years — a landmass larger than all of North America — while Rome took over 400 years to build its empire. Beyond conquest, his campaigns indirectly shaped the borders of modern nations like China and Russia, and even the English word 'mogul' derives from the Persian word for Mongol.", "book": "Genghis Khan and the Making of the Modern World", "author": "Jack Weatherford", "topic": "Mongol Empire"}, {"title": "Time Is the Goon", "fact": "The title 'A Visit from the Goon Squad' uses 'goon' as a metaphor for time itself — the relentless, unavoidable force that ages and diminishes everyone. The book's structure reinforces this by opening with a young Sasha and closing with another young woman living in her old apartment, making the cycle of time the true antagonist.", "book": "A Visit from the Goon Squad", "author": "Jennifer Egan", "topic": "Contemporary Fiction"}, {"title": "Politics Rooted in Herding", "fact": "While the English word 'politics' derives from the Greek 'polis' meaning city, the Arabic equivalent 'Siyasah' traces its origins to the herding of horses and camels. This linguistic difference reveals a profound cultural divergence — one civilization grounded its concept of governance in urban order, the other in the nomadic management of animals.", "book": "Arabs: A 3,000-Year History of Peoples, Tribes and Empires", "author": "Tim Mackintosh-Smith", "topic": "Arab History"}, {"title": "Robots Faced Public Protests", "fact": "In the world of I, Robot, the introduction of robots into society was met with public protests and union opposition — mirroring real historical anxieties around automation and labor displacement. The story explores how deeply humans resist being replaced, even by machines designed explicitly to help them.", "book": "I, Robot", "author": "Isaac Asimov", "topic": "Science Fiction"}, {"title": "A Story Needs Change", "fact": "According to storytelling craft, the defining feature that separates a story from a mere anecdote is change over time — the narrator must begin in one emotional or circumstantial place and end somewhere meaningfully different. The change doesn't need to be dramatic or positive; it just has to exist, or there is no story.", "book": "Storyworthy", "author": "Matthew Dicks", "topic": "Storytelling Craft"}];
+const QUESTIONS = [{"question": "What was the primary outcome of the 1884 Berlin Conference for Africa?", "options": ["African nations agreed to respect existing colonial borders", "European powers established the borders of Africa, controlling 90% of the continent within 30 years", "The United States took control of several African territories", "King Leopold II was granted control of all of Central Africa"], "answer": 1, "explanation": "The 1884 Berlin Conference was where European powers drew up the borders of Africa. Within 30 years of the conference, 90% of Africa was under European control.", "book": "Africa is Not a Country", "author": "Dipo Faloyin", "topic": "African Colonial History"}, {"question": "What was one of the key motivations for Pope Urban II launching the Crusades?", "options": ["To expand the Roman Empire into North Africa", "To punish Saladin for capturing Jerusalem", "To unite a fractioning Christian world amid threats to Constantinople and internal European conflicts", "To establish trade routes with the Abbasid Caliphate"], "answer": 2, "explanation": "Pope Urban II launched the Crusades to address several pressures: Constantinople was threatened by advancing Turks, there was a religious rift between Rome and Constantinople, and the Pope had conflicts with France. The Crusades served as a unifying cause for a fragmented Christian world.", "book": "Saladin", "author": "John Man", "topic": "Medieval Islamic History"}, {"question": "According to 'The Obstacle Is the Way', what are the three steps to overcoming obstacles?", "options": ["Planning, Execution, and Reflection", "Perception, Action, and Will", "Patience, Courage, and Wisdom", "Awareness, Emotion, and Resilience"], "answer": 1, "explanation": "The book outlines a three-step process: Perception (how we look at problems without fear or subjectivity), Action (using energy and creativity to break obstacles down), and Will (the inner strength to handle defeat and difficulty).", "book": "The Obstacle Is the Way", "author": "Ryan Holiday", "topic": "Stoic Philosophy"}, {"question": "What was the core belief of Abdul Wahhab that led to the founding of Wahhabism?", "options": ["That Muslims should embrace Western science and social values", "That the Ottoman Empire should convert to Shia Islam", "That Muslims had been corrupted and needed to return to the core roots of Islam", "That Arab nationalism was the path to defeating European colonialism"], "answer": 2, "explanation": "Abdul Wahhab believed that Muslims had strayed from the true meaning of Islam and needed to return to its fundamental roots. He was disgusted by the cosmopolitanism of cities like Basra, and his alliance with Ibn Saud helped consolidate this puritanical vision across the Arabian Peninsula.", "book": "Destiny Disrupted", "author": "Tamim Ansary", "topic": "Islamic World History"}, {"question": "According to 'The Charisma Myth', what are the three core elements that make someone appear charismatic?", "options": ["Confidence, Humor, and Intelligence", "Power, Warmth, and Presence", "Appearance, Vocabulary, and Eye Contact", "Empathy, Assertiveness, and Positivity"], "answer": 1, "explanation": "The book identifies Power (the ability to affect the world around you, often conveyed through body language), Warmth (genuine goodwill toward others), and Presence (moment-to-moment awareness that makes others feel truly heard) as the three pillars of charisma.", "book": "The Charisma Myth", "author": "Olivia Fox Cabane", "topic": "Personal Development"}];
+const FACTS = [{"title": "Carthage's Fall Broke Rome", "fact": "Rome's decisive defeat of Carthage in 146 BC, rather than being a triumph, paradoxically destabilized Rome itself. With its greatest external enemy gone, Rome turned inward — the resulting period saw rising economic inequality, political polarization, and rampant corruption that would eventually unravel the Republic.", "book": "The Storm Before the Storm", "author": "Mike Duncan", "topic": "Ancient Rome"}, {"title": "Robots Faced Union Protests", "fact": "In Asimov's fictional world of I, Robot, the rise of robots was not just a philosophical or safety concern — it was also a labor issue, with public protests and unions actively pushing back against robotic workers, mirroring real-world anxieties about automation displacing human labor.", "book": "I, Robot", "author": "Isaac Asimov", "topic": "Science Fiction"}, {"title": "Politics Rooted in Horse-Herding", "fact": "While the English word 'politics' derives from the Greek 'polis' meaning city, the Arabic equivalent 'Siyasah' traces its roots to the herding of horses and camels. This linguistic contrast reveals how differently two civilizations conceived of governance — one urban and civic, the other nomadic and pastoral.", "book": "Arabs", "author": "Tim Mackintosh-Smith", "topic": "Arab History"}, {"title": "Apollo Alone Kept His Name", "fact": "When the Romans absorbed Greek mythology, they renamed nearly every major deity — Zeus became Jupiter, Hera became Juno, Athena became Minerva. Apollo was the sole exception, the only Greek god whose name the Romans adopted without change, suggesting a unique cultural reverence for him.", "book": "The Odyssey", "author": "Homer", "topic": "Greek Mythology"}, {"title": "Habits Live in Primitive Brain", "fact": "Habits are stored in the basal ganglia, a deep, evolutionarily ancient part of the brain that remains active even when the rest of the brain is essentially 'off.' This means habitual behavior can operate completely outside conscious awareness — the brain essentially outsources routine actions to conserve mental energy.", "book": "The Power of Habit", "author": "Charles Duhigg", "topic": "Behavioural Science"}];
 
 let current = 0;
 let score = 0;
+let answers = [];
 
 function hide(id) { document.getElementById(id).classList.remove("show"); }
 function show(id) { document.getElementById(id).classList.add("show"); }
@@ -446,6 +450,7 @@ function showHome() {
 function startQuiz() {
   current = 0;
   score = 0;
+  answers = [];
   hide("home-screen");
   hide("score-screen");
   document.getElementById("home-btn").classList.add("visible");
@@ -460,24 +465,47 @@ function showQuestion() {
   document.getElementById("quiz-source").innerHTML =
     `<div><span class="source-book">${q.book}</span><span class="source-author">&mdash; ${q.author}</span></div><div class="source-topic">Topic: ${q.topic}</div>`;
   document.getElementById("question-text").textContent = q.question;
-  document.getElementById("explanation").textContent = "";
-  document.getElementById("explanation").classList.remove("show");
-  const nextBtn = document.getElementById("next-btn");
-  nextBtn.classList.add("btn-hidden");
 
+  const backBtn = document.getElementById("back-btn");
+  if (current > 0) backBtn.classList.remove("btn-hidden");
+  else backBtn.classList.add("btn-hidden");
+
+  const nextBtn = document.getElementById("next-btn");
+  const expEl = document.getElementById("explanation");
+  const already = answers[current];
   const container = document.getElementById("options-container");
   container.innerHTML = "";
   const labels = ["A", "B", "C", "D"];
-  q.options.forEach((opt, i) => {
-    const btn = document.createElement("button");
-    btn.className = "option-btn";
-    btn.textContent = `${labels[i]}. ${opt}`;
-    btn.onclick = () => selectAnswer(i);
-    container.appendChild(btn);
-  });
+
+  if (already !== undefined) {
+    expEl.textContent = q.explanation;
+    expEl.classList.add("show");
+    nextBtn.classList.remove("btn-hidden");
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.textContent = `${labels[i]}. ${opt}`;
+      btn.disabled = true;
+      if (i === q.answer) btn.classList.add("correct");
+      else if (i === already) btn.classList.add("wrong");
+      container.appendChild(btn);
+    });
+  } else {
+    expEl.textContent = "";
+    expEl.classList.remove("show");
+    nextBtn.classList.add("btn-hidden");
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.textContent = `${labels[i]}. ${opt}`;
+      btn.onclick = () => selectAnswer(i);
+      container.appendChild(btn);
+    });
+  }
 }
 
 function selectAnswer(chosen) {
+  answers[current] = chosen;
   const q = QUESTIONS[current];
   const buttons = document.querySelectorAll(".option-btn");
   buttons.forEach(b => b.disabled = true);
@@ -493,6 +521,11 @@ function selectAnswer(chosen) {
   expEl.classList.add("show");
   document.getElementById("next-btn").classList.remove("btn-hidden");
 }
+
+document.getElementById("back-btn").addEventListener("click", () => {
+  current--;
+  showQuestion();
+});
 
 document.getElementById("next-btn").addEventListener("click", () => {
   current++;
@@ -537,7 +570,15 @@ function showFact() {
     `<div><span class="source-book">${f.book}</span><span class="source-author">&mdash; ${f.author}</span></div><div class="source-topic">Topic: ${f.topic}</div>`;
   document.getElementById("fact-next-btn").textContent =
     current < FACTS.length - 1 ? "Next fact →" : "Finish";
+  const factBackBtn = document.getElementById("fact-back-btn");
+  if (current > 0) factBackBtn.classList.remove("btn-hidden");
+  else factBackBtn.classList.add("btn-hidden");
 }
+
+document.getElementById("fact-back-btn").addEventListener("click", () => {
+  current--;
+  showFact();
+});
 
 document.getElementById("fact-next-btn").addEventListener("click", () => {
   current++;
@@ -549,6 +590,13 @@ document.getElementById("fact-next-btn").addEventListener("click", () => {
     show("facts-done-screen");
   }
 });
+
+function goBackFromFactsDone() {
+  current = FACTS.length - 1;
+  hide("facts-done-screen");
+  show("facts-screen");
+  showFact();
+}
 
 // ── Archive ──
 fetch("archive.json")
